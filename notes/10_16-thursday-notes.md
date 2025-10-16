@@ -50,9 +50,28 @@ program.cs entry point for configuring services and app behavior
 
 
 
+# Code catchup 
 
+Hello:  
+parameter public string name getset  
+//query parameter  
+private string greeting = "hello";  
+private string? nickName;  
+public string displayName => $"{Name ?? "NoName"} ({nickName ?? "Ingen kallenavn?})"; 
+
+protected override // receives a lot of things to override  
+OnParameterSet(){Url url = Nav.ToAbsuluteUrl(Nav.Url);
+Dictionary<string, StringValues> queryParams = QueryHelpers.ParseQuery(url.Query);  
+if (queryParams.TryGetValue("greeting", out var StringValues g))
+{ greeting = g;}  
+copy if and do nickname as n  
+else nickname = null  
+}
+
+top of page:  
+@inject NavigationManager Nav
 
 ---
 !important check the rest of the documentation
 !important check the video resources
-!important
+!important catch up on what was missed, 01/hello + greeter.razor, etc.
