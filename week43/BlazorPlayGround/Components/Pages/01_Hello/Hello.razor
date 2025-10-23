@@ -1,0 +1,34 @@
+﻿@page "/01/Hello"
+@page "/01/Hello/{name}"
+@using Microsoft.Extensions.Primitives
+@inject NavigationManager Nav
+<PageTitle>Hello</PageTitle>
+<h3>Hello</h3>
+
+<Greeter Greeting="@greeting" Target="@displayName"/>
+
+@code {
+    [Parameter] public string? Name { get; set; }
+
+    private string greeting = "hello";
+    private string? nickName;
+    public string displayName => $"{Name ?? "NoName"} {nickName ?? "No nickname?"}";
+    protected override void OnParametersSet()
+    {
+        Uri uri = Nav.ToAbsoluteUri(Nav.Uri);
+        Dictionary<string, StringValues>? queryParams = QueryHelpers.ParseQuery(uri.Query);
+        if (queryParams.TryGetValue("greeting", out var g))
+        {
+            greeting = g;
+        }
+
+        if (queryParams.TryGetValue("nickName", out var n))
+        {
+            nickName = n;
+        }
+        else
+        {
+            nickName = null;
+        }
+    }
+}

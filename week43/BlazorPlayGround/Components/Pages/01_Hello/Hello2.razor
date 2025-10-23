@@ -1,0 +1,16 @@
+﻿@page "/01/Hello2"
+<h3>Hello2</h3>
+
+<div class="mb-3">
+    <label for="nameInput" class="form-label">Name: </label>
+    <InputText id="nameInput" @bind-Value="inputName"
+               class="form-control" placeholder="Enter NAME pl0x ..."></InputText>
+</div>
+
+@code {
+    [Parameter, SupplyParameterFromQuery(Name = "greeting")] public string? GreetingFromQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name = "nickname")] public string? NicknameFromQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name = "name")] public string? NameFromQuery { get; set; }
+
+    private string inputName = string.Empty;
+}
