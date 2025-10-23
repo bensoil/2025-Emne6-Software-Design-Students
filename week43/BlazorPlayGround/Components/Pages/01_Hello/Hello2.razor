@@ -1,16 +1,44 @@
 ﻿@page "/01/Hello2"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Components.Forms
 <h3>Hello2</h3>
 
 <div class="mb-3">
-    <label for="nameInput" class="form-label">Name: </label>
-    <InputText id="nameInput" @bind-Value="inputName"
-               class="form-control" placeholder="Enter NAME pl0x ..."></InputText>
+    <label for="nameInput" class="form-label">Navn: </label>
+    <input type="text" id="nameInput" class="form-control" placeholder="Skriv inn navn ..."
+           @oninput="OnNameChanged" Value="@_inputName"/>
 </div>
 
-@code {
-    [Parameter, SupplyParameterFromQuery(Name = "greeting")] public string? GreetingFromQuery { get; set; }
-    [Parameter, SupplyParameterFromQuery(Name = "nickname")] public string? NicknameFromQuery { get; set; }
-    [Parameter, SupplyParameterFromQuery(Name = "name")] public string? NameFromQuery { get; set; }
+<div class="mb-3">
+    <label for="nickInput" class="form-label">Nickname ...</label>
+    <input type="text" id="nickInput" class="form-control" @oninput="OnNickChanged" placeholder="ENter nickname ..."/>
+</div>
 
-    private string inputName = string.Empty;
+<Greeter Greeting="@Greeting" Target="@DisplayName"/>
+
+@code {
+    
+    private string _inputName = string.Empty;
+    private string _nickName = string.Empty;
+    private string _name = string.Empty;
+    
+    [Parameter, SupplyParameterFromQuery(Name="greeting")] public string? GreetingFromQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name="nickname")] public string? NickNameFromQuery { get; set; }
+    [Parameter, SupplyParameterFromQuery(Name="name")] public string? NameFromQuery { get; set; }
+
+    public string Greeting { get; } = "Hello";
+
+    public string DisplayName => $"{_inputName ?? "NoName"} ({_nickName ?? "ingen kallenavn?"})";
+
+    private async Task OnNameChanged(ChangeEventArgs e)
+    {
+        _inputName = e.Value?.ToString() ?? "";
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnNickChanged(ChangeEventArgs e)
+    {
+        _nickName = e.Value?.ToString() ?? "";
+        await InvokeAsync(StateHasChanged);
+    }
 }
