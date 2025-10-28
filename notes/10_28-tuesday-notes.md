@@ -27,3 +27,12 @@ we create a storage handler so it's focused
 
 --- 
 Check the doc for info about web assembly pl0x
+
+!IMPORTANT this will be necessary for ur project buddy boy
+cd 2025-emne7-avansert-programmering-students/
+  326  cd week44/StudentBloggAPI
+  327  dotnet ef migrations add -o Data/Migrations
+  328  dotnet ef migrations add "Initial" -o Data/Migrations
+  329  dotnet ef database update
+  330  dotnet build
+  331  dotnet ef database update
