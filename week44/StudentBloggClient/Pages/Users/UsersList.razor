@@ -4,7 +4,6 @@
 
 @inject IUsersApiClient Api
 
-
 <h3 class="mb-3">Users</h3>
 
 @if (_isLoading)
@@ -24,34 +23,36 @@ else
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
-            <tr>
-                <th>Id</th>
-                <th>UserName</th>
-                <th>Name</th>
-                <th>Email</th>
-            </tr>
+                <tr>
+                    <th>Id</th>
+                    <th>UserName</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th></th>
+                </tr>
             </thead>
             <tbody>
-            @foreach (var u in _users)
-            {
-                <tr>
-                    <td class="text-truncate">@u.Id</td>
-                    <td>@u.UserName</td>
-                    <td>@($"{u.FirstName} {u.LastName}")</td>
-                    <td>@u.Email</td>
-                    <td class="text-end">
-                        <a class="btn btn-sm btn-outline-primary" href="/users/@u.Id">View/Edit</a>
-                        <button class="btn btn-sm btn-outline-secondary ms-2" @onclick="() => DeleteById(u.Id)">Delete</button>
-                    </td>
+                @foreach (var u in _users)
+                {
+                    <tr>
+                        <td class="text-truncate">@u.Id</td>
+                        <td>@u.UserName</td>
+                        <td>@($"{u.FirstName} {u.LastName}")</td>
+                        <td>@u.Email</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-primary" href="/users/@u.Id">View/Edit</a>
+                            <button class="btn btn-sm btn-outline-secondary ms-2" @onclick="() => DeleteById(u.Id)">Delete</button>
+                        </td>
                         
-                </tr>
-            }
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 }
 
 @code {
+
     private List<UserDto> _users = [];
     private bool _isLoading;
     private string? _error;
@@ -63,6 +64,7 @@ else
         await Load();
     }
 
+    
     private async Task Load()
     {
         _isLoading = true;
@@ -73,7 +75,6 @@ else
         catch (Exception ex)
         {
             _error = ex.StackTrace;
-
         }
         finally
         {
@@ -85,4 +86,5 @@ else
     {
         await Task.Delay(10);
     }
+
 }

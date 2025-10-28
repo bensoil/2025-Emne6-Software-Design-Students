@@ -1,6 +1,6 @@
 ﻿namespace StudentBloggClient.Services.Auth;
 
-public class BasicAuthStore :IBasicAuthStore
+public class BasicAuthStore : IBasicAuthStore
 {
     public string? UserName { get; }
     public bool IsAuthenticated { get; }
